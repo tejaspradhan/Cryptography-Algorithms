@@ -8,6 +8,10 @@ public class RSA {
         if (c == 1) {
             encrpyt();
         }
+
+        else if (c == 2) {
+            decrypt();
+        }
         sc.close();
     }
 
@@ -60,5 +64,37 @@ public class RSA {
     }
 
     public static void decrypt() {
+        Scanner sc = new Scanner(System.in);
+        int e, C, n;
+        System.out.println("Enter cipher");
+        C = sc.nextInt();
+        System.out.println("Enter public key pair");
+        e = sc.nextInt();
+        n = sc.nextInt();
+        int d = inverse(e, n);
+        int M = exp(C, e, n);
+        System.out.println("Decrpyted message : " + M);
+        sc.close();
+    }
+
+    public static int inverse(int e, int n) {
+        if (n == 1)
+            return 0;
+        int a = n;
+        int b = 0;
+        int c = 1;
+
+        while (e > 1) {
+            int d = c / n;
+            int temp = n;
+            n = e % n;
+            e = temp;
+            temp = b;
+            b = e - (d * b);
+            c = temp;
+        }
+
+        c = (c + a) % a; // if negative
+        return c;
     }
 }
