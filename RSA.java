@@ -27,6 +27,7 @@ public class RSA {
         int phiN = (p - 1) * (q - 1);
         // int e = generatePublicKey(n, phiN);
         int e = 7;
+        System.out.println("Public Key Pair : " + e + " " + n);
         int cipher = exp(M, e, n);
         cipher %= n;
         System.out.println("Encrypted Message " + cipher);
