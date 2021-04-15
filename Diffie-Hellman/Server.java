@@ -13,8 +13,8 @@ public class Server {
         g = sc.nextInt();
         System.out.println("Enter value of a");
         Xb = sc.nextInt();
-        int Ya = exp(g, Xb, p);
-        String y = Integer.toString(Ya);
+        int Yb = exp(g, Xb, p);
+        String y = Integer.toString(Yb);
         System.out.println("Waiting for Connections : ");
         try {
             ServerSocket ss = new ServerSocket(8000);
@@ -26,8 +26,10 @@ public class Server {
 
             // reading public key sent by client
             String x = in.readLine();
-            int Xa = Integer.valueOf(x);
-            System.out.println("Public key received from client : " + Xa);
+            int Ya = Integer.valueOf(x);
+            int Kab = exp(Ya, Xb, p);
+            System.out.println("Public key received from client : " + Ya);
+            System.out.println("Shared secret key computed as : " + Kab);
             out.println(y);
 
         }

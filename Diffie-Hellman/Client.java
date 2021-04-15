@@ -22,9 +22,10 @@ public class Client {
 
             out.println(y);
             String x = in.readLine();
-            int Xb = Integer.valueOf(x);
-            System.out.println("Public Key received from server : " + Xb);
-
+            int Yb = Integer.valueOf(x);
+            int Kab = exp(Yb, Xa, p);
+            System.out.println("Public Key received from server : " + Yb);
+            System.out.println("Shared Secret key is computed as : " + Kab);
         }
 
         catch (Exception e) {
