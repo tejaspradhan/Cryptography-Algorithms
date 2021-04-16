@@ -256,7 +256,6 @@ public class SAES {
             if (i % 2 == 0) {
 
                 w[i] = XOR(w[i - 2], subNibble(rotNibble(w[i - 1]), false));
-                System.out.println();
                 while (count < 2) {
                     if (count == 0) {
                         int[] temp = { 1, 0, 0, 0, 0, 0, 0, 0 };
@@ -442,7 +441,3 @@ public class SAES {
         return result;
     }
 }
-
-// p= 1 1 0 1 0 1 1 1 0 0 1 0 1 0 0 0
-// k = 0 1 0 0 1 0 1 0 1 1 1 1 0 1 0 1
-// c = 0 0 1 0 0 1 0 0 1 1 1 0 1 1 0 0

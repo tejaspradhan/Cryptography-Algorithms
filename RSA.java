@@ -27,6 +27,7 @@ public class RSA {
         int phiN = (p - 1) * (q - 1);
         // int e = generatePublicKey(n, phiN);
         int e = 7;
+        System.out.println("Value of e : " + e);
         System.out.println("Public Key Pair : " + e + " " + n);
         int cipher = exp(M, e, n);
         cipher %= n;
@@ -78,24 +79,26 @@ public class RSA {
         sc.close();
     }
 
-    public static int inverse(int e, int n) {
-        if (n == 1)
+    static int inverse(int num, int n) {
+        if (num < 0)
+            num += n;
+        int a = num, m = n, m0 = m;
+        int y = 0, x = 1;
+
+        if (m == 1) // base case
             return 0;
-        int a = n;
-        int b = 0;
-        int c = 1;
 
-        while (e > 1) {
-            int d = c / n;
-            int temp = n;
-            n = e % n;
-            e = temp;
-            temp = b;
-            b = e - (d * b);
-            c = temp;
+        while (a > 1) {
+            int q = a / m;
+            int t = m;
+            m = a % m;
+            a = t;
+            t = y;
+            y = x - q * y;
+            x = t;
         }
-
-        c = (c + a) % a; // if negative
-        return c;
+        if (x < 0)
+            x += m0;
+        return x;
     }
 }

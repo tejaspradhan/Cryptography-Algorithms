@@ -11,7 +11,7 @@ public class Server {
         p = sc.nextInt();
         System.out.println("Enter value of generator polynomial g");
         g = sc.nextInt();
-        System.out.println("Enter value of a");
+        System.out.println("Enter value of b");
         Xb = sc.nextInt();
         int Yb = exp(g, Xb, p);
         String y = Integer.toString(Yb);
