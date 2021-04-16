@@ -31,9 +31,10 @@ public class Server {
         System.out.println("Enter co-ordinates of Generator Point");
         G.x = sc.nextInt();
         G.y = sc.nextInt();
-        System.out.println("Enter private value a");
+        System.out.println("Enter private value b");
         b = sc.nextInt();
         Point Pb = compute(b, G);
+        System.out.println(Pb.x + " " + Pb.y);
         System.out.println("Waiting for Connections : ");
         try {
             ServerSocket ss = new ServerSocket(8000);
@@ -51,26 +52,11 @@ public class Server {
         }
     }
 
-    public static int exp(int a, int b, int n) {
-        if (b == 0)
-            return 1;
-
-        else if (b % 2 == 0) {
-            int x = exp(a, b / 2, n);
-            return (x * x) % n;
-        }
-
-        else {
-            int x = exp(a, b / 2, n);
-            return (a * ((x * x) % n)) % n;
-        }
-    }
-
     public static Point addPoints(Point P1, Point P2) {
         int m; // slope
         Point result = new Point();
         if (P1.x == P2.x && P1.y == P2.y) { // equal points
-            m = (3 * P1.x * P1.x) * inverse(2 * P1.y, N);
+            m = ((3 * P1.x * P1.x) + A) * inverse(2 * P1.y, N);
             m %= N;
         }
 
@@ -81,7 +67,10 @@ public class Server {
 
         result.x = ((m * m) - P1.x - P2.x) % N;
         result.y = (m * (P1.x - result.x) - P1.y) % N;
-
+        while (result.x < 0)
+            result.x += N;
+        while (result.y < 0)
+            result.y += N;
         return result;
     }
 
