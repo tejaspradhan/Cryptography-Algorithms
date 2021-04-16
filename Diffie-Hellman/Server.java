@@ -31,12 +31,13 @@ public class Server {
             System.out.println("Public key received from client : " + Ya);
             System.out.println("Shared secret key computed as : " + Kab);
             out.println(y);
-
+            ss.close();
         }
 
         catch (Exception e) {
             System.err.println(e);
         }
+        sc.close();
     }
 
     public static int exp(int a, int b, int n) {

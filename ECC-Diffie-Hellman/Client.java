@@ -39,6 +39,7 @@ public class Client {
             Socket soc = new Socket("localhost", 8000);
             BufferedReader in = new BufferedReader(new InputStreamReader(soc.getInputStream()));
             PrintWriter out = new PrintWriter(soc.getOutputStream(), true);
+            soc.close();
         }
 
         catch (Exception e) {

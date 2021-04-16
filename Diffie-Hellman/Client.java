@@ -26,11 +26,13 @@ public class Client {
             int Kab = exp(Yb, Xa, p);
             System.out.println("Public Key received from server : " + Yb);
             System.out.println("Shared Secret key is computed as : " + Kab);
+            soc.close();
         }
 
         catch (Exception e) {
             System.err.println(e);
         }
+        sc.close();
 
     }
 
