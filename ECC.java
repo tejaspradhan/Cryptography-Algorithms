@@ -1,27 +1,10 @@
-import java.io.*;
-import java.net.Socket;
 import java.util.*;
 
-class Point {
-    public int x, y;
-
-    Point(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    Point() {
-        this.x = 0;
-        this.y = 0;
-    }
-}
-
-public class Client {
+public class ECC {
     static int A = 1, B = 6, N = 11;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter Parameters A,B and N for elliptic Curve");
         int a, b;
         Point Pm = new Point();
         Point B = new Point();
@@ -32,21 +15,22 @@ public class Client {
         System.out.println("Enter co-ordinates of the base point");
         B.x = sc.nextInt();
         B.y = sc.nextInt();
-        System.out.println("Enter private key a");
+        System.out.println("Enter private keys a and b");
         a = sc.nextInt();
+        b = sc.nextInt();
+        Point kB = compute(k, B);
+        Point Pb = compute(b, kB);
+        Point kPb = compute(k, Pb);
+        Point result = addPoints(Pm, kPb);
+        Point bKb = compute(b, kB);
+        bKb.y = (-1) * bKb.y;
+        System.out.println(
+                "Cipher Text (Pc) : " + "(" + kB.x + "," + kB.y + ")" + " " + "(" + result.x + "," + result.y + ")");
 
-        try {
-            System.out.println("Client Program Started");
-            Socket soc = new Socket("localhost", 8000);
-            BufferedReader in = new BufferedReader(new InputStreamReader(soc.getInputStream()));
-            PrintWriter out = new PrintWriter(soc.getOutputStream(), true);
-            soc.close();
-        }
-
-        catch (Exception e) {
-            System.err.println(e);
-        }
+        Point newResult = addPoints(result, bKb);
+        System.out.println(newResult.x + " " + newResult.y);
         sc.close();
+
     }
 
     public static Point addPoints(Point P1, Point P2) {
@@ -118,5 +102,19 @@ public class Client {
             int x = exp(a, b / 2, n);
             return (a * ((x * x) % n)) % n;
         }
+    }
+}
+
+class Point {
+    public int x, y;
+
+    Point(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    Point() {
+        this.x = 0;
+        this.y = 0;
     }
 }

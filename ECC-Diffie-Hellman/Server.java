@@ -18,23 +18,19 @@ class Point {
 }
 
 public class Server {
-    static int A, B, N;
+    static int A = 1, B = 6, N = 11;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter Parameters A,B and N for elliptic Curve");
-        A = sc.nextInt();
-        B = sc.nextInt();
-        N = sc.nextInt();
-        Point G = new Point();
         int b;
-        System.out.println("Enter co-ordinates of Generator Point");
-        G.x = sc.nextInt();
-        G.y = sc.nextInt();
-        System.out.println("Enter private value b");
+        Point B = new Point();
+        int k = 3;
+        System.out.println("Enter co-ordinates of the base point");
+        B.x = sc.nextInt();
+        B.y = sc.nextInt();
+        System.out.println("Enter private key b");
         b = sc.nextInt();
-        Point Pb = compute(b, G);
-        System.out.println(Pb.x + " " + Pb.y);
+
         System.out.println("Waiting for Connections : ");
         try {
             ServerSocket ss = new ServerSocket(8000);
