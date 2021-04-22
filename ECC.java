@@ -21,6 +21,7 @@ public class ECC {
         Point kB = compute(k, B);
         Point Pb = compute(b, kB);
         Point kPb = compute(k, Pb);
+        System.out.println(kPb.x + " " + kPb.y);
         Point result = addPoints(Pm, kPb);
         Point bKb = compute(b, kB);
         bKb.y = (-1) * bKb.y;

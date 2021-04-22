@@ -21,7 +21,6 @@ public class Client {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter Parameters A,B and N for elliptic Curve");
         int a, b;
         Point Pm = new Point();
         Point B = new Point();
@@ -34,12 +33,23 @@ public class Client {
         B.y = sc.nextInt();
         System.out.println("Enter private key a");
         a = sc.nextInt();
+        Point kB = compute(k, B);
 
         try {
-            System.out.println("Client Program Started");
             Socket soc = new Socket("localhost", 8000);
             BufferedReader in = new BufferedReader(new InputStreamReader(soc.getInputStream()));
             PrintWriter out = new PrintWriter(soc.getOutputStream(), true);
+            String Pbx = in.readLine();
+            String Pby = in.readLine();
+            Point Pb = new Point(Integer.valueOf(Pbx), Integer.valueOf(Pby));
+            Point kPb = compute(k, Pb);
+            System.out.println("Received Public key :  " + "(" + Pb.x + "," + kPb.y + ") from the server");
+            Point result = addPoints(Pm, kPb);
+            out.println(kB.x);
+            out.println(kB.y);
+            out.println(result.x);
+            out.println(result.y);
+
             soc.close();
         }
 

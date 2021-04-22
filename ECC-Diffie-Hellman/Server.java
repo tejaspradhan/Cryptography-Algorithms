@@ -30,7 +30,8 @@ public class Server {
         B.y = sc.nextInt();
         System.out.println("Enter private key b");
         b = sc.nextInt();
-
+        Point kB = compute(k, B);
+        Point Pb = compute(b, kB);
         System.out.println("Waiting for Connections : ");
         try {
             ServerSocket ss = new ServerSocket(8000);
@@ -38,9 +39,21 @@ public class Server {
             System.out.println("Connection Established");
             BufferedReader in = new BufferedReader(new InputStreamReader(soc.getInputStream()));
             PrintWriter out = new PrintWriter(soc.getOutputStream(), true);
+            out.println(Pb.x);
+            out.println(Pb.y);
+            String KBx = in.readLine();
+            String KBy = in.readLine();
+            String Pcx = in.readLine();
+            String Pcy = in.readLine();
+            Point Pc = new Point(Integer.valueOf(Pcx), Integer.valueOf(Pcy));
+            System.out.println(
+                    "Received Cipher Point [(" + kB.x + "," + kB.y + ") (" + Pc.x + "," + Pc.y + ")] from the Client");
+            Point bKb = compute(b, kB);
+            bKb.y = (-1) * bKb.y;
+            Point newResult = addPoints(Pc, bKb);
+            System.out.println("Message Decrypted as: " + newResult.x + " " + newResult.y);
 
-            // reading public key sent by client
-
+            ss.close();
         }
 
         catch (Exception e) {
@@ -70,24 +83,13 @@ public class Server {
         return result;
     }
 
-    public static Point compute(int n, Point P) {
-        // computes the value of nP
-        Point result = P;
-        n--; // as result initialised to P
-        while (n > 0) {
-            result = addPoints(result, P);
-            n--;
-        }
-        return result;
-    }
-
-    static int inverse(int num, int n) {
+    public static int inverse(int num, int mod) {
         if (num < 0)
-            num += N;
-        int a = num, m = n, m0 = m;
+            num += mod;
+        int a = num, m = mod, m0 = m;
         int y = 0, x = 1;
 
-        if (m == 1) // base case
+        if (m == 1)
             return 0;
 
         while (a > 1) {
@@ -102,6 +104,32 @@ public class Server {
         if (x < 0)
             x += m0;
         return x;
+    }
+
+    public static Point compute(int n, Point P) {
+        // computes the value of nP
+        Point result = P;
+        n--; // as result initialised to P
+        while (n > 0) {
+            result = addPoints(result, P);
+            n--;
+        }
+        return result;
+    }
+
+    public static int exp(int a, int b, int n) {
+        if (b == 0)
+            return 1;
+
+        else if (b % 2 == 0) {
+            int x = exp(a, b / 2, n);
+            return (x * x) % n;
+        }
+
+        else {
+            int x = exp(a, b / 2, n);
+            return (a * ((x * x) % n)) % n;
+        }
     }
 
 }
