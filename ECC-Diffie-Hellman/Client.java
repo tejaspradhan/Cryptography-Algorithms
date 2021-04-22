@@ -21,7 +21,7 @@ public class Client {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int a, b;
+        int a;
         Point Pm = new Point();
         Point B = new Point();
         int k = 3;

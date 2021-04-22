@@ -59,6 +59,7 @@ public class Server {
         catch (Exception e) {
             System.err.println(e);
         }
+        sc.close();
     }
 
     public static Point addPoints(Point P1, Point P2) {
