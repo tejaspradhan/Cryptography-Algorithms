@@ -105,7 +105,7 @@ public class Client {
     }
 
     public static Point compute(int n, Point P) {
-        // computes the value of nP
+
         Point result = P;
         n--; // as result initialised to P
         while (n > 0) {
