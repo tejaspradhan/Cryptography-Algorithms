@@ -8,7 +8,7 @@ public class ECC {
         int a, b;
         Point Pm = new Point();
         Point B = new Point();
-        int k = 3;
+        int k = 6;
         System.out.println("Enter message Point");
         Pm.x = sc.nextInt();
         Pm.y = sc.nextInt();
@@ -20,8 +20,9 @@ public class ECC {
         b = sc.nextInt();
         Point kB = compute(k, B);
         Point Pb = compute(b, kB);
+        System.out.println("Pb: " + Pb.x + " " + Pb.y);
         Point kPb = compute(k, Pb);
-        System.out.println(kPb.x + " " + kPb.y);
+        System.out.println("kPB: " + kPb.x + " " + kPb.y);
         Point result = addPoints(Pm, kPb);
         Point bKb = compute(b, kB);
         bKb.y = (-1) * bKb.y;
